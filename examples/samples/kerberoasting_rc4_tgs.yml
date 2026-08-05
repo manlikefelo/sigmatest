@@ -1,0 +1,31 @@
+# Samples for: Kerberoasting - RC4 (0x17) TGS Request for an SPN Account
+# Rule fires on EventID 4769 + RC4 (0x17), excluding machine accounts ($) and krbtgt.
+true_positives:
+  - name: RC4 TGS for a real service account (classic Kerberoast)
+    event:
+      EventID: 4769
+      TicketEncryptionType: "0x17"
+      ServiceName: "svc-sql"
+      TargetUserName: "attacker"
+
+benign:
+  - name: AES TGS request - modern crypto, not RC4
+    event:
+      EventID: 4769
+      TicketEncryptionType: "0x12"
+      ServiceName: "svc-sql"
+  - name: RC4 TGS but for a machine account (ServiceName ends in $)
+    event:
+      EventID: 4769
+      TicketEncryptionType: "0x17"
+      ServiceName: "WS01$"
+  - name: RC4 TGS for krbtgt itself (normal Kerberos)
+    event:
+      EventID: 4769
+      TicketEncryptionType: "0x17"
+      ServiceName: "krbtgt"
+  - name: Unrelated event id
+    event:
+      EventID: 4624
+      TicketEncryptionType: "0x17"
+      ServiceName: "svc-sql"

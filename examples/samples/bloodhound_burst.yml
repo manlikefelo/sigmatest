@@ -1,0 +1,30 @@
+# Samples for: Directory Enumeration Burst - Possible BloodHound/SharpHound
+# This is a CORRELATION rule: count() by SubjectUserName > 15 over a 60s window.
+# So each case supplies an `events` LIST (a burst), not a single `event`.
+# The harness counts matching events per group and compares against the threshold.
+true_positives:
+  - name: 20 directory reads from one account in the window (over threshold of 15)
+    burst:
+      count: 20
+      event:
+        EventID: 4662
+        SubjectUserName: "svc-collector"
+
+benign:
+  - name: 15 reads - exactly at threshold, not over it
+    burst:
+      count: 15
+      event:
+        EventID: 4662
+        SubjectUserName: "admin"
+  - name: 30 reads spread across two accounts (15 each) - no single account over threshold
+    events:
+      - { EventID: 4662, SubjectUserName: "userA" }
+      - { EventID: 4662, SubjectUserName: "userB" }
+    repeat_each: 15
+  - name: A single legitimate directory read
+    burst:
+      count: 1
+      event:
+        EventID: 4661
+        SubjectUserName: "alice"
