@@ -1,15 +1,15 @@
 # sigmatest
 
-**Lint and unit-test your Sigma detection rules against sample log events — no live SIEM required.**
+**Lint and unit-test your Sigma detection rules against sample log events: no live SIEM required.**
 
 ![CI](https://github.com/manlikefelo/sigmatest/actions/workflows/ci.yml/badge.svg)
 ![coverage](docs/coverage.svg)
 ![python](https://img.shields.io/badge/python-3.11%20|%203.12%20|%203.13-blue)
 ![license](https://img.shields.io/badge/license-MIT-green)
 
-`sigmatest` treats detection rules the way you'd treat application code: it runs each rule against **true-positive events that must alert** and **benign events that must not**, and fails when a rule gets it wrong. It's a small, fast, pure-Python evaluator — the tests run in seconds on a stock CI runner with no SIEM to stand up.
+`sigmatest` treats detection rules the way you'd treat application code: it runs each rule against **true-positive events that must alert** and **benign events that must not**, and fails when a rule gets it wrong. It's a small, fast, pure-Python evaluator: the tests run in seconds on a stock CI runner with no SIEM to stand up.
 
-I built this while putting my Sigma rules under CI in my [detection-as-code](https://github.com/manlikefelo/detection-as-code) project — the matcher there wanted to be a real, reusable, packaged tool. This is that tool, engineered to production standards: `src` layout, a typed API, a typer CLI, a thorough pytest suite, and CI running ruff + mypy + tests across three Python versions.
+I built this while putting my Sigma rules under CI in my [detection-as-code](https://github.com/manlikefelo/detection-as-code) project: the matcher there wanted to be a real, reusable, packaged tool. This is that tool, engineered to production standards: `src` layout, a typed API, a typer CLI, a thorough pytest suite, and CI running ruff + mypy + tests across three Python versions.
 
 ---
 
@@ -67,14 +67,14 @@ $ echo $?
 1
 ```
 
-Exit codes: **0** all good · **1** failures/lint problems · **2** usage/IO error — so it drops straight into a CI gate.
+Exit codes: **0** all good · **1** failures/lint problems · **2** usage/IO error, so it drops straight into a CI gate.
 
 ## What it understands
 
 Field modifiers `contains` / `startswith` / `endswith` / `re` / `all`; list values (OR);
 `selection`, `a and b`, `a or b`, `sel and not 1 of filter_*`, `1 of x_*`, `all of x_*`;
 and `count() by <field> > N` correlation. Anything outside that subset raises
-`UnsupportedSigmaError` rather than silently passing — an un-evaluatable rule is never
+`UnsupportedSigmaError` rather than silently passing: an un-evaluatable rule is never
 reported as tested.
 
 ## Library API
@@ -90,8 +90,8 @@ print(result.passed, [o.name for o in result.failures])
 
 ## Showcase
 
-- **The test suite is the centerpiece** — see [`tests/`](tests/) and the coverage badge above. Unit tests for every field modifier and condition shape, plus edge cases: malformed YAML, empty samples, an unsupported modifier, a broken regex, correlation at the threshold boundary.
-- **Green CI across 3.11 / 3.12 / 3.13** with ruff + mypy (`--strict`) + pytest — [`ci.yml`](.github/workflows/ci.yml).
+- **The test suite is the centerpiece**: see [`tests/`](tests/) and the coverage badge above. Unit tests for every field modifier and condition shape, plus edge cases: malformed YAML, empty samples, an unsupported modifier, a broken regex, correlation at the threshold boundary.
+- **Green CI across 3.11 / 3.12 / 3.13** with ruff + mypy (`--strict`) + pytest: [`ci.yml`](.github/workflows/ci.yml).
 - **A real CLI**: `pip install` it and `sigmatest test rules/` in any detection repo.
 
 ## Development
