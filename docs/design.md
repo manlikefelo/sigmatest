@@ -18,7 +18,7 @@ quiet, in seconds, with no SIEM.
 **A purpose-built evaluator, not pySigma.** pySigma compiles to queries; running those
 queries needs a live backend. To keep the tool fast, offline, and dependency-light
 (just `pyyaml` + `typer`), `sigmatest` implements the Sigma subset that real
-endpoint/AD/web rules use. The trade-off is honest: it's a *subset*. Anything outside
+endpoint/AD/web rules use. The trade-off: it's a *subset*. Anything outside
 it raises `UnsupportedSigmaError` rather than silently passing, so the tool never
 claims to have tested a rule it couldn't actually reason about. That "fail loud, never
 false-green" rule is the single most important design choice: a testing tool that
