@@ -45,7 +45,7 @@ samples file.
 This tool was extracted from my [detection-as-code](https://github.com/manlikefelo/detection-as-code)
 project (P5), where the same matcher lived as an internal test helper. Promoting it to
 a standalone, packaged, pip-installable tool is the "custom Python tooling" capstone
-(P10): it's the thing I wished existed while doing the earlier detection work, built to
+(P8): it's the thing I wished existed while doing the earlier detection work, built to
 the standard a team would actually depend on.
 
 - **detection-as-code** could import `sigmatest` instead of vendoring its own matcher.
